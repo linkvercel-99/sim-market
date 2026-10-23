@@ -1,0 +1,12 @@
+{
+  "framework": null,
+  "installCommand": "npm install",
+  "buildCommand": "node build.js",
+  "outputDirectory": "public",
+  "headers": [
+    {
+      "source": "/(.*)\\.(mp3|png|jpg|jpeg|webp|svg|ico)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800, stale-while-revalidate=86400" }]
+    }
+  ]
+}

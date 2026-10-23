@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<meta name="description" content="SIM (Srilangka Indonesia Market): pod, liquid, rokok, pakaian, dan cemilan produk Indonesia di Sri Lanka.">
+<meta name="theme-color" content="#050505">
+<meta property="og:type" content="website"><meta property="og:site_name" content="SIM MARKETr"><meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Sim— Srilangka Indonesia Market">
+<meta property="og:description" content="Menyediakan semua produk Indonesia: pod, liquid, rokok, pakaian, cemilan, dan banyak lagi.">
+<meta property="og:image" content="https://sim-markett.pages.dev/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:url" content="https://sim-markett.pages.dev/"><meta name="twitter:card" content="summary_large_image">
+<title> SIM Srilangka Indonesia Market</title>
+<link rel="icon" type="image/png" href="https://i.imgur.com/8l7kxaW.png"><link rel="apple-touch-icon" href="https://i.imgur.com/8l7kxaW.png">
+<link rel="preconnect" href="https://i.imgur.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://iashoonbusiyonhinvke.supabase.co" crossorigin>
+<link rel="preload" as="image" href="https://i.imgur.com/by7sk5x.png" fetchpriority="high">
+<link rel="stylesheet" href="tailwind.css" onerror="var s=document.createElement('script');s.src='https://cdn.tailwindcss.com/3.4.17';document.head.appendChild(s)">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script>try{const c=JSON.parse(localStorage.getItem("cv_settings")||"{}"),r=document.documentElement.style;if(c.accent_color)r.setProperty("--accent",c.accent_color);if(c.bg_color)r.setProperty("--bg",c.bg_color);if(c.text_color)r.setProperty("--text",c.text_color)}catch(e){}</script>
+</head>
+<body class="min-h-screen">
+
+
+<div class="hdr"><header class="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-4">
+  <img id="logo" src="https://i.imgur.com/8l7kxaW.png" width="64" height="64" decoding="async" class="w-12 h-12 sm:w-16 sm:h-16 shrink-0 rounded-full" alt="SIM Logo">
+  <input id="q" type="search" placeholder="Cari produk..." class="flex-1 min-w-0 bg-black border-2 bd rounded-full px-4 sm:px-5 py-3 text-sm outline-none focus:border-[var(--accent)]">
+  <button id="openCart" class="relative acc p-2.5 sm:p-3 shrink-0" aria-label="Keranjang">
+    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+    <span id="badge" class="absolute -top-0 -right-0 red text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+  </button>
+</header></div>
+
+<main class="max-w-6xl mx-auto px-4 pb-16">
+  <nav id="cats" class="flex gap-2 overflow-x-auto py-4"></nav>
+  <img id="banner" src="https://i.imgur.com/by7sk5x.png" width="1470" height="348" fetchpriority="high" decoding="async" class="w-full h-auto bg-neutral-900 rounded-2xl" alt="Banner promo Sim market">
+
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-3 border-2 border-neutral-700 rounded-2xl p-4 my-5 text-xs">
+    <div><b class="acc block">100% Original</b>Produk terjamin</div>
+    <div><b class="acc block">Pengiriman Cepat</b>Ke seluruh area</div>
+    <div><b class="acc block">Pembayaran Aman</b>Tunai &amp; kesbon</div>
+    <div><b class="acc block">Customer Service</b>Siap membantu</div>
+  </section>
+
+  <div class="flex justify-between items-baseline mb-4">
+    <h2 id="title" class="text-xl font-bold">Produk Pilihan</h2><span id="count" class="text-sm text-neutral-400"></span>
+  </div>
+  <div id="grid" class="pgrid"><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div></div>
+  <div id="err" class="hidden text-center py-16"><p class="text-neutral-400 mb-4">Gagal memuat produk. Periksa koneksi internet Anda lalu coba lagi.</p><button id="retry" class="red rounded-xl px-6 py-3 font-semibold">Coba lagi</button></div>
+  <p id="empty" class="hidden text-center text-neutral-400 py-16">Tidak ada produk yang cocok. Coba kata kunci atau kategori lain.</p>
+</main>
+
+<audio id="bgm" src="musiku.mp3" loop preload="none"></audio>
+<button id="musicBtn" aria-label="Putar atau jeda musik" class="fixed bottom-4 right-4 z-30 w-11 h-11 rounded-full red text-lg shadow-lg opacity-[.85]">🔇</button>
+
+<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-black/80"><div id="mbox" class="card w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"></div></div>
+<div id="toast" class="fixed bottom-20 inset-x-0 z-[55] hidden justify-center px-4 pointer-events-none"><div class="card pointer-events-auto flex items-center gap-3 pl-4 pr-2 text-sm shadow-xl"><span id="toastTxt"></span><button data-opencart class="acc font-semibold underline min-h-[44px] px-2">Lihat keranjang</button></div></div>
+<div id="lb" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/95 touch-none overflow-hidden"><button data-lbclose class="absolute top-3 right-3 w-11 h-11 rounded-full bg-black/70 text-2xl z-10 flex items-center justify-center" aria-label="Tutup zoom">&times;</button><img id="lbimg" class="max-w-full max-h-full select-none" draggable="false" alt="Foto produk diperbesar"></div>
+<div id="shade" class="fixed inset-0 bg-black/70 hidden z-40"></div>
+<aside id="drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-[var(--bg)] border-l bd2 z-50 translate-x-full transition-transform flex flex-col">
+  <div class="p-4 flex justify-between items-center border-b bd2"><h3 class="font-bold">Keranjang Belanja</h3><button id="closeCart" class="w-11 h-11 text-2xl leading-none" aria-label="Tutup keranjang">&times;</button></div>
+  <div id="items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
+  <div class="p-4 border-t bd2 space-y-3">
+    <div class="flex justify-between font-bold"><span>Total</span><span id="total"></span></div>
+    <button id="wa" class="w-full py-3 rounded-xl bg-green-700 hover:bg-green-600 font-semibold">Pesan via WhatsApp</button>
+    <button id="tg" class="w-full py-3 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold">Pesan via Telegram</button>
+  </div>
+</aside>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

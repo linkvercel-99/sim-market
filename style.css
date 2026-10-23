@@ -1,0 +1,29 @@
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--text)}
+:root{--accent:#b84040;--bg:#050505;--text:#eeeeee}
+.acc{color:color-mix(in srgb,var(--accent) 65%,#fff)}.bd{border-color:color-mix(in srgb,var(--accent) 55%,#000)}.bd2{border-color:color-mix(in srgb,var(--accent) 25%,#000)}
+.pill{border:1.5px solid var(--accent);color:color-mix(in srgb,var(--accent) 65%,#fff);border-radius:999px;padding:.4rem 1.1rem;font-size:.85rem;white-space:nowrap;transition:.2s}
+.pill.on,.pill:hover{background:var(--accent);color:#fff}
+.card{background:linear-gradient(color-mix(in srgb,var(--accent) 14%,var(--bg)),color-mix(in srgb,var(--bg) 90%,#fff));border:1px solid color-mix(in srgb,var(--accent) 25%,#000);border-radius:16px;overflow:hidden}
+.red{background:var(--accent);color:#fff}.red:hover{filter:brightness(1.15)}
+::-webkit-scrollbar{height:6px;width:6px}::-webkit-scrollbar-thumb{background:#4a1a1a;border-radius:9px}
+.pgrid{display:grid;gap:.75rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:640px){.pgrid{gap:1rem;grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:900px){.pgrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(min-width:1100px){.pgrid{grid-template-columns:repeat(5,minmax(0,1fr))}}
+.gnav{position:absolute;top:50%;transform:translateY(-50%);width:2.75rem;height:2.75rem;border-radius:999px;background:rgba(0,0,0,.6);color:#fff;font-size:1.7rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.gnav:hover{background:var(--accent)}.gnav.l{left:.5rem}.gnav.r{right:.5rem}
+.hdr{position:sticky;top:0;z-index:30;background:var(--bg);border-bottom:1px solid color-mix(in srgb,var(--accent) 18%,transparent)}
+.qty{width:2.75rem;height:2.75rem;border:1.5px solid var(--accent);border-radius:999px;color:color-mix(in srgb,var(--accent) 65%,#fff);font-size:1.25rem;line-height:1;display:inline-flex;align-items:center;justify-content:center}
+.qty:hover{background:var(--accent);color:#fff}
+@media(pointer:coarse){.pill{min-height:44px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+#cats{scrollbar-width:none}#cats::-webkit-scrollbar{display:none}
+/* Popup produk: selalu bisa digulir di HP (ID mengalahkan .card{overflow:hidden}) */
+#mbox{overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;max-height:90vh;max-height:90dvh}
+.buy{position:sticky;bottom:0;margin:0 -1.25rem -1.25rem;padding:.75rem 1.25rem 1rem;background:color-mix(in srgb,var(--bg) 90%,#fff);border-top:1px solid color-mix(in srgb,var(--accent) 25%,#000)}
+@media(max-width:767px){#gal{aspect-ratio:4/3}#gal>img{object-fit:contain}}
+/* Cegah halaman lebih lebar dari layar (penyebab popup/keranjang "miring" di HP berlayar sempit) */
+html,body{max-width:100%;overflow-x:clip}
+@supports not (overflow-x:clip){body{overflow-x:hidden}}
+#mbox .grid>*{min-width:0}
+#mbox h3,#mbox p,#items{overflow-wrap:anywhere}

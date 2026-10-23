@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin — Sim market</title>
+<link rel="icon" type="image/png" href="https://i.imgur.com/8l7kxaW.png"><link rel="apple-touch-icon" href="https://i.imgur.com/8l7kxaW.png">
+<link rel="stylesheet" href="tailwind.css" onerror="var s=document.createElement('script');s.src='https://cdn.tailwindcss.com/3.4.17';document.head.appendChild(s)">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+
+<section id="login" class="min-h-screen flex items-center justify-center p-4">
+  <div class="box w-full max-w-sm space-y-3">
+    <img class="logo w-24 h-24 rounded-full mx-auto" alt="SIM">
+    <h1 class="text-center font-bold text-lg">Masuk Admin</h1>
+    <input id="email" type="email" placeholder="Email" class="in">
+    <input id="pass" type="password" placeholder="Password" class="in">
+    <p id="lerr" class="text-red-400 text-sm"></p>
+    <button id="loginBtn" class="btn w-full">Masuk</button>
+    <a href="index.html" class="block text-center text-sm text-neutral-400">Kembali ke toko</a>
+  </div>
+</section>
+
+<section id="panel" class="hidden max-w-6xl mx-auto p-4 space-y-5">
+  <header class="flex items-center gap-3">
+    <img class="logo w-14 h-14 rounded-full" alt="SIM">
+    <h1 class="font-bold text-lg flex-1">Panel Admin Sim market</h1>
+    <a href="index.html" class="text-sm text-neutral-400">Lihat toko</a>
+    <button id="logout" class="btn !bg-neutral-800">Keluar</button>
+  </header>
+  <nav class="flex gap-2"><button class="tab on" data-tab="products">Produk</button><button class="tab" data-tab="settings">Pengaturan</button></nav>
+  <div id="tabProducts" class="space-y-5">
+
+  <form id="form" class="box grid md:grid-cols-2 gap-3">
+    <h2 id="ftitle" class="md:col-span-2 font-semibold">Tambah Produk</h2>
+    <input type="hidden" id="pid">
+    <input id="name" class="in" placeholder="Nama produk" required>
+    <div class="flex gap-2"><select id="category" class="in" required></select>
+      <button type="button" id="addCat" class="btn !bg-neutral-800 whitespace-nowrap">+ Kategori</button></div>
+    <input id="price" type="number" min="0" step="1" class="in" placeholder="Harga (LKR)" required>
+    <input id="stock" type="number" min="0" step="1" class="in" placeholder="Stok" required>
+    <div class="md:col-span-2">
+      <div class="text-sm mb-2">Foto produk (<span id="imgcount">0</span>/8) — foto pertama menjadi foto utama</div>
+      <div id="imglist" class="flex flex-wrap gap-3 mb-2"></div>
+      <div id="drop" class="cursor-pointer border-2 border-dashed border-red-900 rounded-xl p-4 text-sm text-neutral-300 hover:border-red-600">Klik di sini untuk memilih satu atau beberapa foto dari galeri / kamera</div>
+      <input id="file" type="file" accept="image/*" multiple class="hidden">
+      <div class="flex gap-2 mt-2"><input id="image_url" type="url" class="in" placeholder="Atau tempel link gambar (opsional)"><button type="button" id="addUrl" class="btn !bg-neutral-800 whitespace-nowrap">Tambah link</button></div>
+    </div>
+    <input id="sizes" class="in md:col-span-2" placeholder="Ukuran (pisahkan dengan koma, contoh: S, M, L, XL). Kosongkan jika tidak ada.">
+    <textarea id="description" rows="3" class="in md:col-span-2" placeholder="Deskripsi"></textarea>
+    <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="is_featured" class="accent-red-600"> Tampilkan di Produk Pilihan</label>
+    <div class="flex gap-2 justify-end"><button type="button" id="cancel" class="btn !bg-neutral-800 hidden">Batal</button><button class="btn">Simpan produk</button></div>
+    <p id="msg" class="md:col-span-2 text-sm"></p>
+  </form>
+
+  <div class="box overflow-x-auto">
+    <table class="w-full text-sm min-w-[640px]">
+      <thead class="text-left text-neutral-400"><tr><th class="p-2">Produk</th><th>Kategori</th><th>Harga</th><th>Stok</th><th>Pilihan</th><th></th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  </div>
+
+  <div id="tabSettings" class="hidden space-y-5">
+    <form id="sform" class="box grid md:grid-cols-2 gap-4">
+      <h2 class="md:col-span-2 font-semibold">Kontak Checkout</h2>
+      <label class="text-sm">Nomor WhatsApp<input id="s_wa" class="in mt-1" placeholder="94771234567 (kode negara, tanpa +)"></label>
+      <label class="text-sm">Username Telegram<input id="s_tg" class="in mt-1" placeholder="username_telegram (tanpa @)"></label>
+
+      <h2 class="md:col-span-2 font-semibold mt-2">Logo &amp; Banner</h2>
+      <div>
+        <div class="text-sm mb-1">Logo</div>
+        <div id="s_logo_drop" class="cursor-pointer border-2 border-dashed border-red-900 rounded-xl p-3 flex items-center gap-3 hover:border-red-600">
+          <img id="s_logo_img" class="w-20 h-20 rounded-full object-cover bg-black" alt="Logo"><span class="text-sm text-neutral-300">Klik untuk ganti logo</span></div>
+        <input id="s_logo_file" type="file" accept="image/*" class="hidden">
+        <button type="button" data-reset="logo_url" class="text-xs text-neutral-400 mt-1">Kembalikan logo bawaan</button>
+      </div>
+      <div>
+        <div class="text-sm mb-1">Banner promo</div>
+        <div id="s_banner_drop" class="cursor-pointer border-2 border-dashed border-red-900 rounded-xl p-3 hover:border-red-600">
+          <img id="s_banner_img" class="w-full aspect-[21/5] rounded-lg object-cover bg-black" alt="Banner"><span class="text-sm text-neutral-300 block mt-2">Klik untuk ganti banner (disarankan rasio 21:5, mis. 1470×348)</span></div>
+        <input id="s_banner_file" type="file" accept="image/*" class="hidden">
+        <button type="button" data-reset="banner_url" class="text-xs text-neutral-400 mt-1">Kembalikan banner bawaan</button>
+      </div>
+
+      <h2 class="md:col-span-2 font-semibold mt-2">Musik Latar</h2>
+      <div class="md:col-span-2 border-2 border-dashed border-red-900 rounded-xl p-3 space-y-2">
+        <audio id="s_music_audio" controls preload="none" class="w-full"></audio>
+        <div class="flex flex-wrap items-center gap-3">
+          <button type="button" id="s_music_pick" class="btn !bg-neutral-800">Pilih lagu (MP3)</button>
+          <span id="s_music_name" class="text-sm text-neutral-300">Lagu saat ini</span>
+          <button type="button" data-reset="music_url" class="text-xs text-neutral-400 ml-auto">Kembalikan lagu bawaan</button>
+        </div>
+        <input id="s_music_file" type="file" accept="audio/*" class="hidden">
+        <label class="flex items-center gap-2 text-sm"><input type="checkbox" id="s_music_on" class="accent-red-600"> Aktifkan musik di halaman toko</label>
+        <p class="text-xs text-neutral-500">Disarankan MP3 di bawah 3 MB, maksimal 10 MB, agar halaman tetap cepat.</p>
+      </div>
+
+      <h2 class="md:col-span-2 font-semibold mt-2">Warna Halaman Utama</h2>
+      <div id="presets" class="md:col-span-2 flex flex-wrap gap-2"></div>
+      <label class="text-sm">Warna aksen (tombol &amp; harga)<input id="c_accent" type="color" class="in mt-1 !p-1 h-11"></label>
+      <label class="text-sm">Warna latar<input id="c_bg" type="color" class="in mt-1 !p-1 h-11"></label>
+      <label class="text-sm">Warna teks<input id="c_text" type="color" class="in mt-1 !p-1 h-11"></label>
+      <div id="cprev" class="rounded-xl p-4 flex items-center justify-between border border-neutral-700 text-sm"><span>Pratinjau tampilan</span><b id="cprevb" class="rounded-lg px-4 py-2 text-white">Tambah ke Keranjang</b></div>
+
+      <div class="md:col-span-2 flex items-center gap-3"><button class="btn">Simpan pengaturan</button><p id="smsg" class="text-sm"></p></div>
+    </form>
+    <div class="box space-y-3">
+      <h2 class="font-semibold">Penyimpanan &amp; Bersihkan File Sampah</h2>
+      <p class="text-sm text-neutral-400">Menghapus foto, logo, banner, dan lagu di Supabase Storage yang tidak lagi dipakai produk maupun pengaturan, supaya kuota gratis tidak cepat penuh. Anda bisa melihat daftarnya dulu sebelum menghapus.</p>
+      <div class="flex flex-wrap items-center gap-3"><button type="button" id="scanBtn" class="btn !bg-neutral-800">Pindai file sampah</button><button type="button" id="cleanBtn" class="btn hidden">Hapus semua file sampah</button><span id="cmsg" class="text-sm"></span></div>
+      <div id="cinfo" class="text-sm text-neutral-300"></div>
+      <ul id="clist" class="text-xs text-neutral-400 max-h-48 overflow-y-auto space-y-1"></ul>
+    </div>
+  </div>
+</section>
+
+
+<script src="admin.js"></script>
+</body>
+</html>

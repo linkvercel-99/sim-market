@@ -1,0 +1,6 @@
+body{font-family:Inter,system-ui,sans-serif;background:#050505;color:#eee}
+.in{width:100%;background:#000;border:1px solid #4a1a1a;border-radius:10px;padding:.6rem .8rem;font-size:.9rem;outline:none}
+.in:focus{border-color:#c94c4c}
+.btn{background:#b84040;border-radius:10px;padding:.6rem 1.2rem;font-weight:600;font-size:.9rem}.btn:hover{background:#c94c4c}
+.box{background:#0e0707;border:1px solid #3a1515;border-radius:16px;padding:1.25rem}
+.tab{border:1px solid #4a1a1a;border-radius:10px;padding:.5rem 1.1rem;font-weight:600;font-size:.9rem}.tab.on{background:#b84040}
