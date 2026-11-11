@@ -1,6 +1,96 @@
-body{font-family:Inter,system-ui,sans-serif;background:#050505;color:#eee}
-.in{width:100%;background:#000;border:1px solid #4a1a1a;border-radius:10px;padding:.6rem .8rem;font-size:.9rem;outline:none}
-.in:focus{border-color:#c94c4c}
-.btn{background:#b84040;border-radius:10px;padding:.6rem 1.2rem;font-weight:600;font-size:.9rem}.btn:hover{background:#c94c4c}
-.box{background:#0e0707;border:1px solid #3a1515;border-radius:16px;padding:1.25rem}
-.tab{border:1px solid #4a1a1a;border-radius:10px;padding:.5rem 1.1rem;font-weight:600;font-size:.9rem}.tab.on{background:#b84040}
+/* ===== TEMA WARNA DINAMIS ADMIN ===== */
+:root {
+  --accent: #b84040;
+  --bg: #050505;
+  --text: #eeeeee;
+}
+
+body {
+  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* Input form */
+.in {
+  width: 100%;
+  background: color-mix(in srgb, var(--bg) 85%, #000);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--bg));
+  border-radius: 10px;
+  padding: .6rem .8rem;
+  font-size: .9rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color .15s;
+}
+.in:focus {
+  border-color: var(--accent);
+}
+
+/* Tombol utama */
+.btn {
+  background: var(--accent);
+  color: #fff;
+  border-radius: 10px;
+  padding: .6rem 1.2rem;
+  font-weight: 600;
+  font-size: .9rem;
+  transition: filter .15s;
+}
+.btn:hover {
+  filter: brightness(1.15);
+}
+
+/* Tombol sekunder / abu-abu netral tetap gelap */
+.btn.\!bg-neutral-800 {
+  background: #262626 !important;
+  color: #e5e5e5 !important;
+}
+.btn.\!bg-neutral-800:hover {
+  filter: brightness(1.25);
+}
+
+/* Kartu / Kotak */
+.box {
+  background: color-mix(in srgb, var(--accent) 5%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, var(--bg));
+  border-radius: 16px;
+  padding: 1.25rem;
+}
+
+/* Tab navigasi */
+.tab {
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--bg));
+  border-radius: 10px;
+  padding: .5rem 1.1rem;
+  font-weight: 600;
+  font-size: .9rem;
+  color: var(--text);
+  transition: background .15s, border-color .15s;
+}
+.tab.on {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+/* Penyesuaian elemen dropzone dan aksen agar serasi dengan warna tema */
+.border-red-900 {
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--bg)) !important;
+}
+.hover\:border-red-600:hover {
+  border-color: var(--accent) !important;
+}
+.accent-red-600 {
+  accent-color: var(--accent) !important;
+}
+.border-red-950 {
+  border-color: color-mix(in srgb, var(--accent) 20%, var(--bg)) !important;
+}
+.ring-red-500 {
+  --tw-ring-color: var(--accent) !important;
+}
+.bg-red-700\/90 {
+  background-color: color-mix(in srgb, var(--accent) 80%, #000) !important;
+}
