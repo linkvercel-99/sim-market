@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1">
 <meta name="description" content="SIM (Srilangka Indonesia Market): pod, liquid, rokok, pakaian, dan cemilan produk Indonesia di Sri Lanka.">
-<meta name="theme-color" content="#050505">
+<meta name="theme-color" content="#0c0c0e">
 <meta property="og:type" content="website"><meta property="og:site_name" content="SIM MARKET"><meta property="og:locale" content="id_ID">
-<meta property="og:title" content="Sim— Srilangka Indonesia Market">
+<meta property="og:title" content="Sim — Srilangka Indonesia Market">
 <meta property="og:description" content="Menyediakan semua produk Indonesia: pod, liquid, rokok, pakaian, cemilan, dan banyak lagi.">
 <meta property="og:image" content="https://sim-market-online.pages.dev/og-image.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:url" content="https://sim-market-online.pages.dev/"><meta name="twitter:card" content="summary_large_image">
-<title> SIM Srilangka Indonesia Market</title>
+<title>SIM Srilangka Indonesia Market</title>
 <link rel="icon" type="image/png" href="https://i.imgur.com/8l7kxaW.png"><link rel="apple-touch-icon" href="https://i.imgur.com/8l7kxaW.png">
 <link rel="preconnect" href="https://i.imgur.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,49 +23,115 @@
 </head>
 <body class="min-h-screen">
 
+<div class="hdr">
+  <header class="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-4">
+    <img id="logo" src="https://i.imgur.com/8l7kxaW.png" width="64" height="64" decoding="async" class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-full border border-neutral-800 object-cover" alt="SIM Logo">
+    
+    <!-- Input Pencarian dengan Ikon Kaca Pembesar -->
+    <div class="relative flex-1 min-w-0">
+      <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="q" type="search" placeholder="Cari pod, liquid, rokok, cemilan..." class="w-full bg-neutral-900/90 border border-neutral-700/80 rounded-full pl-10 pr-4 py-2.5 sm:py-3 text-sm outline-none focus:border-[var(--accent)] transition-colors text-white placeholder-neutral-500">
+    </div>
 
-<div class="hdr"><header class="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-4">
-  <img id="logo" src="https://i.imgur.com/8l7kxaW.png" width="64" height="64" decoding="async" class="w-12 h-12 sm:w-16 sm:h-16 shrink-0 rounded-full" alt="SIM Logo">
-  <input id="q" type="search" placeholder="Cari produk..." class="flex-1 min-w-0 bg-black border-2 bd rounded-full px-4 sm:px-5 py-3 text-sm outline-none focus:border-[var(--accent)]">
-  <button id="openCart" class="relative acc p-2.5 sm:p-3 shrink-0" aria-label="Keranjang">
-    <svg width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
-    <span id="badge" class="absolute -top-0 -right-0 red text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-  </button>
-</header></div>
+    <!-- Tombol Keranjang -->
+    <button id="openCart" class="relative acc p-2.5 sm:p-3 shrink-0 rounded-full hover:bg-neutral-800/60 transition-colors" aria-label="Keranjang">
+      <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+      <span id="badge" class="absolute top-1 right-1 red text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">0</span>
+    </button>
+  </header>
+</div>
 
-<main class="max-w-6xl mx-auto px-4 pb-16">
-  <nav id="cats" class="flex gap-2 overflow-x-auto py-4"></nav>
-  <img id="banner" src="https://i.imgur.com/by7sk5x.png" width="1470" height="348" fetchpriority="high" decoding="async" class="w-full h-auto bg-neutral-900 rounded-2xl" alt="Banner promo Sim market">
+<main class="max-w-6xl mx-auto px-3 sm:px-4 pb-20">
+  <nav id="cats" class="flex gap-2 overflow-x-auto py-3.5"></nav>
+  
+  <img id="banner" src="https://i.imgur.com/by7sk5x.png" width="1470" height="348" fetchpriority="high" decoding="async" class="w-full h-auto bg-neutral-900 rounded-2xl border border-neutral-800 shadow-sm" alt="Banner promo Sim market">
 
-  <section class="grid grid-cols-2 md:grid-cols-4 gap-3 border-2 border-neutral-700 rounded-2xl p-4 my-5 text-xs">
-    <div><b class="acc block">100% Original</b>Produk terjamin</div>
-    <div><b class="acc block">Pengiriman Cepat</b>Ke seluruh area</div>
-    <div><b class="acc block">Pembayaran Aman</b>Tunai &amp; kesbon</div>
-    <div><b class="acc block">Customer Service</b>Siap membantu</div>
+  <!-- Keunggulan Layanan dengan Ikon SVG -->
+  <section class="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3 border border-neutral-800 bg-neutral-900/40 rounded-2xl p-3.5 sm:p-4 my-5 text-xs">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-red-500/10 text-red-400 flex items-center justify-center shrink-0">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+      </div>
+      <div><b class="text-neutral-100 block font-semibold">100% Original</b><span class="text-neutral-400 text-[11px]">Produk terjamin</span></div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-400 flex items-center justify-center shrink-0">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="16" height="13" x="1" y="6" rx="2"/><path d="M16 8h4l3 3v5h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      </div>
+      <div><b class="text-neutral-100 block font-semibold">Pengiriman Cepat</b><span class="text-neutral-400 text-[11px]">Ke seluruh area</span></div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center shrink-0">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+      </div>
+      <div><b class="text-neutral-100 block font-semibold">Pembayaran Fleksibel</b><span class="text-neutral-400 text-[11px]">Tunai &amp; kesbon</span></div>
+    </div>
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center shrink-0">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <div><b class="text-neutral-100 block font-semibold">Customer Service</b><span class="text-neutral-400 text-[11px]">Siap membantu</span></div>
+    </div>
   </section>
 
   <div class="flex justify-between items-baseline mb-4">
-    <h2 id="title" class="text-xl font-bold">Produk Pilihan</h2><span id="count" class="text-sm text-neutral-400"></span>
+    <h2 id="title" class="text-lg sm:text-xl font-bold tracking-tight">Produk Pilihan</h2>
+    <span id="count" class="text-xs sm:text-sm text-neutral-400 font-medium"></span>
   </div>
-  <div id="grid" class="pgrid"><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div><div class="card animate-pulse aspect-[3/4]"></div></div>
-  <div id="err" class="hidden text-center py-16"><p class="text-neutral-400 mb-4">Gagal memuat produk. Periksa koneksi internet Anda lalu coba lagi.</p><button id="retry" class="red rounded-xl px-6 py-3 font-semibold">Coba lagi</button></div>
-  <p id="empty" class="hidden text-center text-neutral-400 py-16">Tidak ada produk yang cocok. Coba kata kunci atau kategori lain.</p>
+
+  <div id="grid" class="pgrid">
+    <div class="card animate-pulse aspect-[3/4] bg-neutral-900/50"></div>
+    <div class="card animate-pulse aspect-[3/4] bg-neutral-900/50"></div>
+    <div class="card animate-pulse aspect-[3/4] bg-neutral-900/50"></div>
+    <div class="card animate-pulse aspect-[3/4] bg-neutral-900/50"></div>
+    <div class="card animate-pulse aspect-[3/4] bg-neutral-900/50"></div>
+  </div>
+
+  <div id="err" class="hidden text-center py-16 bg-neutral-900/30 rounded-2xl border border-neutral-800 p-6 my-6">
+    <p class="text-neutral-400 mb-4 text-sm">Gagal memuat produk. Periksa koneksi internet Anda lalu coba lagi.</p>
+    <button id="retry" class="red rounded-xl px-6 py-2.5 font-semibold text-sm">Coba lagi</button>
+  </div>
+  <p id="empty" class="hidden text-center text-neutral-400 py-16 text-sm">Tidak ada produk yang cocok. Coba kata kunci atau kategori lain.</p>
 </main>
 
 <audio id="bgm" src="musiku.mp3" loop preload="none"></audio>
-<button id="musicBtn" aria-label="Putar atau jeda musik" class="fixed bottom-4 right-4 z-30 w-11 h-11 rounded-full red text-lg shadow-lg opacity-[.85]">🔇</button>
+<button id="musicBtn" aria-label="Putar atau jeda musik" class="fixed bottom-4 right-4 z-30 w-11 h-11 rounded-full red text-lg shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">🔇</button>
 
-<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-4 bg-black/80"><div id="mbox" class="card w-full max-w-3xl max-h-[90vh] overflow-y-auto relative"></div></div>
-<div id="toast" class="fixed bottom-20 inset-x-0 z-[55] hidden justify-center px-4 pointer-events-none"><div class="card pointer-events-auto flex items-center gap-3 pl-4 pr-2 text-sm shadow-xl"><span id="toastTxt"></span><button data-opencart class="acc font-semibold underline min-h-[44px] px-2">Lihat keranjang</button></div></div>
-<div id="lb" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/95 touch-none overflow-hidden"><button data-lbclose class="absolute top-3 right-3 w-11 h-11 rounded-full bg-black/70 text-2xl z-10 flex items-center justify-center" aria-label="Tutup zoom">&times;</button><img id="lbimg" class="max-w-full max-h-full select-none" draggable="false" alt="Foto produk diperbesar"></div>
-<div id="shade" class="fixed inset-0 bg-black/70 hidden z-40"></div>
-<aside id="drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-[var(--bg)] border-l bd2 z-50 translate-x-full transition-transform flex flex-col">
-  <div class="p-4 flex justify-between items-center border-b bd2"><h3 class="font-bold">Keranjang Belanja</h3><button id="closeCart" class="w-11 h-11 text-2xl leading-none" aria-label="Tutup keranjang">&times;</button></div>
+<div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm">
+  <div id="mbox" class="card w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl"></div>
+</div>
+
+<div id="toast" class="fixed bottom-20 inset-x-0 z-[55] hidden justify-center px-4 pointer-events-none">
+  <div class="card pointer-events-auto flex items-center gap-3 pl-4 pr-2.5 py-2 text-sm shadow-2xl border border-neutral-700">
+    <span id="toastTxt" class="font-medium text-white"></span>
+    <button data-opencart class="acc font-semibold underline min-h-[40px] px-2 text-xs">Lihat keranjang</button>
+  </div>
+</div>
+
+<div id="lb" class="fixed inset-0 z-[70] hidden items-center justify-center bg-black/95 touch-none overflow-hidden">
+  <button data-lbclose class="absolute top-4 right-4 w-10 h-10 rounded-full bg-neutral-800/80 text-2xl z-10 flex items-center justify-center text-white" aria-label="Tutup zoom">&times;</button>
+  <img id="lbimg" class="max-w-full max-h-full select-none" draggable="false" alt="Foto produk diperbesar">
+</div>
+
+<div id="shade" class="fixed inset-0 bg-black/75 hidden z-40 backdrop-blur-xs"></div>
+
+<aside id="drawer" class="fixed top-0 right-0 h-full w-full max-w-sm bg-[var(--bg)] border-l bd2 z-50 translate-x-full transition-transform duration-300 flex flex-col shadow-2xl">
+  <div class="p-4 flex justify-between items-center border-b bd2">
+    <h3 class="font-bold text-base flex items-center gap-2">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+      Keranjang Belanja
+    </h3>
+    <button id="closeCart" class="w-10 h-10 text-2xl leading-none text-neutral-400 hover:text-white" aria-label="Tutup keranjang">&times;</button>
+  </div>
   <div id="items" class="flex-1 overflow-y-auto p-4 space-y-3"></div>
-  <div class="p-4 border-t bd2 space-y-3">
-    <div class="flex justify-between font-bold"><span>Total</span><span id="total"></span></div>
-    <button id="wa" class="w-full py-3 rounded-xl bg-green-700 hover:bg-green-600 font-semibold">Pesan via WhatsApp</button>
-    <button id="tg" class="w-full py-3 rounded-xl bg-sky-700 hover:bg-sky-600 font-semibold">Pesan via Telegram</button>
+  <div class="p-4 border-t bd2 space-y-2.5 bg-neutral-950/40">
+    <div class="flex justify-between font-bold text-base pb-1"><span>Total</span><span id="total" class="acc"></span></div>
+    <button id="wa" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-semibold text-sm transition-colors flex items-center justify-center gap-2 text-white">
+      Pesan via WhatsApp
+    </button>
+    <button id="tg" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 font-semibold text-sm transition-colors flex items-center justify-center gap-2 text-white">
+      Pesan via Telegram
+    </button>
   </div>
 </aside>
 
