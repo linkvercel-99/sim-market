@@ -92,7 +92,7 @@ async function upload(file, max = 800, alpha = false) {
   return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
 }
 /* ===== PENGATURAN ===== */
-const DEF_LOGO = "https://imgg.fr/r/TJFJEMW2.webp", DEF_BANNER = "https://i.imgur.com/by7sk5x.png";
+const DEF_LOGO = "https://imgg.fr/r/TJFJEMW2.webp", DEF_BANNER = "https://imgg.fr/r/ehx61nnc.webp";
 const PRESETS = { Merah: ["#b84040", "#050505", "#eeeeee"], Biru: ["#2f6fd6", "#05080f", "#eef3ff"], Hijau: ["#2e9f66", "#040a07", "#eefaf3"], Ungu: ["#8b5cc9", "#08050f", "#f3eeff"], Emas: ["#c9a02f", "#0a0804", "#fff8e6"] };
 const sFiles = { logo: null, banner: null, music: null };
 const DEF_MUSIC = "musiku.mp3";
