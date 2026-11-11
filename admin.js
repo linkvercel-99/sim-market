@@ -1,14 +1,40 @@
 const SUPABASE_URL = "https://iashoonbusiyonhinvke.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2hvb25idXNpeW9uaGludmtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQxMzUsImV4cCI6MjEwODA5MDEzNX0.syeh_ZTmKZqgeM0A2LmrrB8zXyjQVT-ZEe31_92PhsY";
 const LOGO = "https://i.imgur.com/8l7kxaW.png";
-
 const $ = s => document.querySelector(s);
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const lkr = n => "LKR " + Number(n).toLocaleString("en-US");
-let products = [];
 document.querySelectorAll(".logo").forEach(i => i.src = LOGO);
 
+/* ===== SINKRONISASI TEMA WARNA KE ADMIN ===== */
+function applyTheme(acc, bg, tx) {
+  const r = document.documentElement.style;
+  r.setProperty("--accent", acc || "#b84040");
+  r.setProperty("--bg", bg || "#050505");
+  r.setProperty("--text", tx || "#eeeeee");
+}
+
+// Baca cache lokal agar tema admin langsung tampil tanpa kedip (flicker)
+try {
+  const cached = JSON.parse(localStorage.getItem("cv_settings") || "{}");
+  if (cached.accent_color) applyTheme(cached.accent_color, cached.bg_color, cached.text_color);
+  if (cached.logo_url) document.querySelectorAll(".logo").forEach(i => i.src = cached.logo_url);
+} catch (e) {}
+
+// Sinkronkan tema dari Supabase saat halaman admin dibuka
+async function initTheme() {
+  if (!db) return;
+  const { data } = await db.from("settings").select("accent_color,bg_color,text_color,logo_url").eq("id", 1).maybeSingle();
+  if (data) {
+    try { localStorage.setItem("cv_settings", JSON.stringify(data)); } catch (e) {}
+    applyTheme(data.accent_color, data.bg_color, data.text_color);
+    if (data.logo_url) document.querySelectorAll(".logo").forEach(i => i.src = data.logo_url);
+  }
+}
+initTheme();
+
+let products = [];
 function msg(t, ok = true) { const m = $("#msg"); m.textContent = t; m.className = "md:col-span-2 text-sm " + (ok ? "text-emerald-400" : "text-red-400"); }
 let shown = null;
 function show(session) {
@@ -17,7 +43,6 @@ function show(session) {
   if (on && shown !== session.user.id) { shown = session.user.id; setTimeout(refresh, 0); }
   if (!on) shown = null;
 }
-
 $("#loginBtn").onclick = async () => {
   const err = $("#lerr"); err.textContent = "";
   if (SUPABASE_URL.startsWith("ISI_") || SUPABASE_ANON_KEY.startsWith("ISI_")) { err.textContent = "SUPABASE_URL / SUPABASE_ANON_KEY di admin.html belum diisi."; return; }
@@ -31,7 +56,6 @@ $("#pass").addEventListener("keydown", e => e.key === "Enter" && $("#loginBtn").
 $("#logout").onclick = async () => { await db.auth.signOut(); show(null); };
 // Jangan panggil query Supabase langsung di dalam callback ini (bisa menyebabkan deadlock)
 db.auth.onAuthStateChange((_e, s) => setTimeout(() => show(s), 0));
-
 const BUCKET = "product-images";
 let imgs = []; const MAX_IMGS = 8;   // [{url} | {file, preview}]
 function renderImgs() {
@@ -58,6 +82,7 @@ async function shrink(file, max = 800, alpha = false) {
   const bmp = await createImageBitmap(file), r = Math.min(1, max / Math.max(bmp.width, bmp.height));
   const c = document.createElement("canvas"); c.width = Math.round(bmp.width * r); c.height = Math.round(bmp.height * r);
   const x = c.getContext("2d"); if (!alpha) { x.fillStyle = "#fff"; x.fillRect(0, 0, c.width, c.height); } x.drawImage(bmp, 0, 0, c.width, c.height);
+  if (bmp.close) bmp.close();
   return new Promise(res => c.toBlob(res, "image/webp", .8));
 }
 async function upload(file, max = 800, alpha = false) {
@@ -82,9 +107,9 @@ async function uploadAudio(file) {
 $("#s_music_pick").onclick = () => $("#s_music_file").click();
 $("#s_music_file").onchange = e => { const f = e.target.files[0]; if (!f) return; sFiles.music = f; $("#s_music_audio").src = URL.createObjectURL(f); $("#s_music_name").textContent = f.name + " (belum disimpan)"; };
 function sMsg(t, ok = true) { const m = $("#smsg"); m.textContent = t; m.className = "text-sm " + (ok ? "text-emerald-400" : "text-red-400"); }
-function setColors(acc, bg, tx) { $("#c_accent").value = acc; $("#c_bg").value = bg; $("#c_text").value = tx; prevColors(); }
+function setColors(acc, bg, tx) { $("#c_accent").value = acc; $("#c_bg").value = bg; $("#c_text").value = tx; prevColors(); applyTheme(acc, bg, tx); }
 function prevColors() { $("#cprev").style.background = $("#c_bg").value; $("#cprev").style.color = $("#c_text").value; $("#cprevb").style.background = $("#c_accent").value; }
-["c_accent", "c_bg", "c_text"].forEach(id => $("#" + id).addEventListener("input", prevColors));
+["c_accent", "c_bg", "c_text"].forEach(id => $("#" + id).addEventListener("input", () => { prevColors(); applyTheme($("#c_accent").value, $("#c_bg").value, $("#c_text").value); }));
 $("#presets").innerHTML = Object.keys(PRESETS).map(n => `<button type="button" data-p="${n}" class="tab !py-1.5" style="border-color:${PRESETS[n][0]}">${n}</button>`).join("") + `<span class="text-xs text-neutral-500 self-center">pilih preset atau atur manual</span>`;
 $("#presets").addEventListener("click", e => { const b = e.target.closest("[data-p]"); if (b) setColors(...PRESETS[b.dataset.p]); });
 ["logo", "banner"].forEach(k => {
@@ -95,6 +120,9 @@ async function loadSettings() {
   const { data, error } = await db.from("settings").select("*").eq("id", 1).maybeSingle();
   if (error) return sMsg("Gagal memuat pengaturan: " + error.message + " (sudah menjalankan settings.sql?)", false);
   const s = data || {};
+  try { localStorage.setItem("cv_settings", JSON.stringify(s)); } catch (e) {}
+  applyTheme(s.accent_color, s.bg_color, s.text_color);
+  if (s.logo_url) document.querySelectorAll(".logo").forEach(i => i.src = s.logo_url);
   $("#s_wa").value = s.whatsapp || ""; $("#s_tg").value = s.telegram || "";
   $("#s_logo_img").src = s.logo_url || DEF_LOGO; $("#s_banner_img").src = s.banner_url || DEF_BANNER;
   setColors(s.accent_color || "#b84040", s.bg_color || "#050505", s.text_color || "#eeeeee");
@@ -104,6 +132,9 @@ async function loadSettings() {
 }
 $("#sform").onsubmit = async e => {
   e.preventDefault();
+  const sBtn = $("#sform button:not([type])");
+  sBtn.disabled = true;
+  sBtn.textContent = "Menyimpan...";
   const row = { id: 1, whatsapp: $("#s_wa").value.replace(/\D/g, "") || null, telegram: $("#s_tg").value.trim().replace(/^https?:\/\/t\.me\//, "").replace(/^@/, "") || null,
     accent_color: $("#c_accent").value, bg_color: $("#c_bg").value, text_color: $("#c_text").value, music_enabled: $("#s_music_on").checked, updated_at: new Date().toISOString() };
   try {
@@ -111,10 +142,21 @@ $("#sform").onsubmit = async e => {
     if (sFiles.logo) row.logo_url = await upload(sFiles.logo, 512, true);
     if (sFiles.banner) row.banner_url = await upload(sFiles.banner, 1600, false);
     if (sFiles.music) row.music_url = await uploadAudio(sFiles.music);
-  } catch (err) { return sMsg("Gagal mengunggah gambar: " + err.message, false); }
+  } catch (err) {
+    sBtn.disabled = false;
+    sBtn.textContent = "Simpan pengaturan";
+    return sMsg("Gagal mengunggah gambar: " + err.message, false);
+  }
   const { error } = await db.from("settings").upsert(row);
+  sBtn.disabled = false;
+  sBtn.textContent = "Simpan pengaturan";
   if (error) return sMsg("Gagal menyimpan: " + error.message, false);
-  sMsg("Pengaturan tersimpan. Halaman toko akan ikut berubah."); sFiles.logo = sFiles.banner = sFiles.music = null; loadSettings();
+  try {
+    const cached = JSON.parse(localStorage.getItem("cv_settings") || "{}");
+    localStorage.setItem("cv_settings", JSON.stringify({ ...cached, ...row }));
+  } catch (e) {}
+  applyTheme(row.accent_color, row.bg_color, row.text_color);
+  sMsg("Pengaturan tersimpan. Halaman toko dan admin telah disinkronkan."); sFiles.logo = sFiles.banner = sFiles.music = null; loadSettings();
 };
 document.querySelectorAll("[data-reset]").forEach(b => b.onclick = async () => {
   const { error } = await db.from("settings").upsert({ id: 1, [b.dataset.reset]: null });
@@ -126,7 +168,6 @@ document.querySelectorAll("[data-tab]").forEach(b => b.onclick = () => {
   document.querySelectorAll("[data-tab]").forEach(x => x.classList.toggle("on", x === b));
   if (b.dataset.tab === "settings") loadSettings();
 });
-
 async function loadCats(sel) {
   const { data } = await db.from("categories").select("name").order("name");
   $("#category").innerHTML = (data || []).map(c => `<option>${esc(c.name)}</option>`).join("");
@@ -145,16 +186,26 @@ async function refresh() {
 }
 function reset() { $("#form").reset(); imgs = []; renderImgs(); $("#pid").value = ""; $("#ftitle").textContent = "Tambah Produk"; $("#cancel").classList.add("hidden"); }
 $("#cancel").onclick = reset;
-
 $("#form").onsubmit = async e => {
   e.preventDefault();
-  const urls = [];
-  try { msg("Mengunggah gambar..."); for (const it of imgs) urls.push(it.file ? await upload(it.file) : it.url); }
-  catch (err) { return msg("Gagal mengunggah gambar: " + err.message, false); }
+  const saveBtn = $("#form button:last-of-type");
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Menyimpan...";
+  let urls = [];
+  try {
+    msg("Mengunggah gambar...");
+    urls = await Promise.all(imgs.map(it => it.file ? upload(it.file) : Promise.resolve(it.url)));
+  } catch (err) {
+    saveBtn.disabled = false;
+    saveBtn.textContent = "Simpan produk";
+    return msg("Gagal mengunggah gambar: " + err.message, false);
+  }
   const row = { name: $("#name").value.trim(), category: $("#category").value, price: +$("#price").value, stock: parseInt($("#stock").value),
     image_url: urls[0] || null, images: urls, sizes: $("#sizes").value.trim() || null, description: $("#description").value.trim() || null, is_featured: $("#is_featured").checked };
   const id = $("#pid").value;
   const { error } = id ? await db.from("products").update(row).eq("id", id) : await db.from("products").insert(row);
+  saveBtn.disabled = false;
+  saveBtn.textContent = "Simpan produk";
   if (error) return msg("Gagal menyimpan: " + error.message, false);
   msg(id ? "Produk diperbarui." : "Produk ditambahkan."); reset(); refresh();
 };
@@ -178,7 +229,6 @@ $("#rows").addEventListener("click", async e => {
     error ? msg("Gagal menghapus: " + error.message, false) : refresh();
   }
 });
-
 /* ===== BERSIHKAN FILE SAMPAH (Supabase Storage) ===== */
 let junk = [], junkSize = 0;
 const fmt = n => n > 1048576 ? (n / 1048576).toFixed(2) + " MB" : (n / 1024).toFixed(1) + " KB";
@@ -206,7 +256,7 @@ $("#scanBtn").onclick = async () => {
     const used = new Set();
     pr.data.forEach(p => [p.image_url, ...(p.images || [])].forEach(u => { const x = pathOf(u); if (x) used.add(x); }));
     st.data.forEach(s => [s.logo_url, s.banner_url, s.music_url].forEach(u => { const x = pathOf(u); if (x) used.add(x); }));
-    const now = Date.now();   // file < 10 menit tidak disentuh (mungkin baru diunggah)
+    const now = Date.now();
     junk = files.filter(f => !used.has(f.path) && now - f.time > 10 * 60 * 1000);
     junkSize = junk.reduce((s, f) => s + f.size, 0);
     const total = files.reduce((s, f) => s + f.size, 0);
