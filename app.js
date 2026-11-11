@@ -119,12 +119,7 @@ function render() {
 
   $("#grid").innerHTML = list.map(p => {
     const out = p.stock <= 0;
-    const badge = out
-      ? `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-red-500/10 text-red-400 border border-red-500/20"><span class="w-1.5 h-1.5 rounded-full bg-red-400"></span>Habis</span>`
-      : p.stock <= 5
-      ? `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-amber-500/10 text-amber-400 border border-amber-500/20"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Sisa ${p.stock}</span>`
-      : `<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>Tersedia</span>`;
-
+    const badge = out ? ["Habis", "text-red-400"] : p.stock <= 5 ? ["Sisa " + p.stock + " item", "text-amber-400"] : ["Tersedia (" + p.stock + ")", "text-neutral-400"];
     const imgCount = imgsOf(p).length;
 
     return `<article class="card flex flex-col group">
@@ -137,7 +132,7 @@ function render() {
         <h3 data-open="${p.id}" class="font-semibold text-xs sm:text-sm line-clamp-2 cursor-pointer hover:text-[var(--accent)] transition-colors">${esc(p.name)}</h3>
         <div class="mt-auto pt-2 flex items-center justify-between gap-1">
           <b class="acc text-sm sm:text-base tracking-tight font-bold">${lkr(p.price)}</b>
-          ${badge}
+          <span class="text-xs ${badge[1]} font-medium">${badge[0]}</span>
         </div>
         <button ${sizesOf(p).length ? "data-open" : "data-add"}="${p.id}" ${out ? "disabled" : ""} class="red mt-2 min-h-[40px] rounded-xl py-2 text-xs sm:text-sm font-semibold disabled:opacity-30 disabled:cursor-not-allowed shadow-sm">
           Tambah ke Keranjang
@@ -305,9 +300,9 @@ function drawModal(err = "") {
         <p class="text-xs text-neutral-400 font-semibold tracking-wider uppercase">${esc(p.category)}</p>
         <h3 class="text-xl font-bold pr-10 leading-snug">${esc(p.name)}</h3>
         <div class="flex items-center gap-3">
-          <b class="text-2xl acc font-bold">${lkr(p.price)}</b>
-          ${badge}
-        </div>
+  <b class="text-2xl acc font-bold">${lkr(p.price)}</b>
+  <span class="text-sm ${badge[1]} font-medium">${badge[0]}</span>
+</div>
         <p class="text-sm text-neutral-300 whitespace-pre-line leading-relaxed">${esc(p.description) || "Belum ada deskripsi untuk produk ini."}</p>
         
         ${sz.length ? `<div class="pt-1"><div class="text-xs font-semibold text-neutral-400 uppercase tracking-wider mb-2">Pilih Ukuran</div><div class="flex flex-wrap gap-2">${sz.map(x => `<button data-msz="${esc(x)}" class="pill ${x === size ? "on" : ""}">${esc(x)}</button>`).join("")}</div></div>` : ""}
@@ -396,19 +391,38 @@ $("#closeCart").onclick = $("#shade").onclick = closeCart;
 $("#wa").onclick = () => { const o = order(); if (o) window.open(`https://wa.me/${waNum()}?text=${encodeURIComponent(o)}`, "_blank"); };
 $("#tg").onclick = () => { const o = order(); if (o) window.open(`https://t.me/${tgUser()}?text=${encodeURIComponent(o)}`, "_blank"); };
 
-/* ===== MUSIK LATAR (Kontrol Terkendali) ===== */
+/* ===== MUSIK LATAR (Auto-Play pada Sentuhan/Klik Pertama) ===== */
 const bgm = $("#bgm");
-bgm.volume = 0.35;
-const setBtn = () => { $("#musicBtn").textContent = bgm.paused ? "🔇" : "🔊"; };
+bgm.volume = 0.4;
+let userPaused = false;
+
+const setBtn = () => {
+  $("#musicBtn").textContent = bgm.paused ? "🔇" : "🔊";
+};
+
+const EVS = ["click", "touchend", "keydown"];
+
+function startOnInteract(e) {
+  if (userPaused || S.music_enabled === false || (e.target.closest && e.target.closest("#musicBtn"))) return;
+  bgm.play().then(() => {
+    EVS.forEach(ev => document.removeEventListener(ev, startOnInteract));
+    setBtn();
+  }).catch(() => {});
+}
+
+EVS.forEach(ev => document.addEventListener(ev, startOnInteract));
 
 $("#musicBtn").onclick = () => {
   if (bgm.paused) {
+    userPaused = false;
     bgm.play().catch(() => {});
   } else {
+    userPaused = true;
     bgm.pause();
   }
   setBtn();
 };
+
 bgm.addEventListener("play", setBtn);
 bgm.addEventListener("pause", setBtn);
 
