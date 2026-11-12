@@ -1,3 +1,7 @@
+
+/* Scroll kategori rapi tanpa scrollbar default */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 :root {
   --accent: #b84040;
   --bg: #0c0c0e;
