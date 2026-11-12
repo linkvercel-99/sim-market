@@ -24,7 +24,7 @@
 <body class="min-h-screen">
 
 <div class="hdr">
-  <header class="max-w-6xl mx-auto px-3 sm:px-4 py-3 flex items-center gap-2 sm:gap-4">
+  <header class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-4">
     <img id="logo" src="https://imgg.fr/r/TJFJEMW2.webp" width="64" height="64" decoding="async" class="w-12 h-12 sm:w-14 sm:h-14 shrink-0 rounded-full border border-neutral-800 object-cover" alt="SIM Logo">
     
     <!-- Input Pencarian dengan Ikon Kaca Pembesar -->
@@ -39,10 +39,13 @@
       <span id="badge" class="absolute top-1 right-1 red text-[11px] font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-md">0</span>
     </button>
   </header>
+  <!-- Bar Kategori Sticky (Menempel di bawah header saat di-scroll) -->
+  <div class="border-t border-neutral-800/60 max-w-6xl mx-auto px-3 sm:px-4">
+    <nav id="cats" class="flex gap-2 overflow-x-auto py-2.5 no-scrollbar"></nav>
+  </div>
 </div>
 
-<main class="max-w-6xl mx-auto px-3 sm:px-4 pb-20">
-  <nav id="cats" class="flex gap-2 overflow-x-auto py-3.5"></nav>
+<main class="max-w-6xl mx-auto px-3 sm:px-4 pb-24">
   
   <img id="banner" src="https://imgg.fr/r/ehx61nnc.webp" width="1470" height="348" fetchpriority="high" decoding="async" class="w-full h-auto bg-neutral-900 rounded-2xl border border-neutral-800 shadow-sm" alt="Banner promo Sim market">
 
@@ -130,6 +133,26 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="app.js"></script>
+
+
+<!-- Floating Cart Bar (Muncul di bawah layar saat ada barang di keranjang) -->
+<div id="floatingCart" class="fixed bottom-4 left-3 right-3 sm:left-auto sm:right-6 sm:w-80 z-25 transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+  <div class="p-3 sm:p-3.5 flex items-center justify-between gap-3 shadow-2xl border bd2 bg-neutral-900/95 backdrop-blur-md rounded-2xl cursor-pointer hover:border-[var(--accent)] transition-colors" data-opencart>
+    <div class="flex items-center gap-2.5 min-w-0">
+      <div class="w-9 h-9 rounded-xl red flex items-center justify-center shrink-0 shadow-md">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 4h2l2.4 11h10.2L20 7H6"/><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/></svg>
+      </div>
+      <div class="min-w-0 leading-tight">
+        <div class="text-[11px] text-neutral-400 font-medium"><span id="fcCount">0</span> barang</div>
+        <div id="fcTotal" class="font-bold text-sm text-white tracking-tight">LKR 0</div>
+      </div>
+    </div>
+    <div class="red px-3.5 py-2 rounded-xl font-semibold text-xs flex items-center gap-1 shrink-0 shadow-md">
+      <span>Lihat Keranjang</span>
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
