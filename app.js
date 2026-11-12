@@ -61,7 +61,11 @@ async function loadSettings() {
   localStorage.setItem("cv_settings", JSON.stringify(S));
   applySettings();
 }
+
+/* Panggil di luar fungsi */
 applySettings();
+loadSettings();
+
 
 const withTimeout = (pr, ms = 12000) => Promise.race([pr, new Promise((_, rej) => setTimeout(() => rej(new Error("timeout")), ms))]);
 
@@ -474,3 +478,4 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) relo
 
 /* Load data awal */
 load();
+loadSettings();
