@@ -3,7 +3,7 @@ const SUPABASE_URL = "https://iashoonbusiyonhinvke.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2hvb25idXNpeW9uaGludmtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQxMzUsImV4cCI6MjEwODA5MDEzNX0.syeh_ZTmKZqgeM0A2LmrrB8zXyjQVT-ZEe31_92PhsY";
 const WHATSAPP_NUMBER = "94XXXXXXXXX";
 const TELEGRAM_USERNAME = "username_telegram";
-const LOGO = "https://i.imgur.com/8l7kxaW.png";
+const LOGO = "https://imgg.fr/r/TJFJEMW2.webp";
 const BANNER = "https://imgg.fr/r/ehx61nnc.webp";
 
 const $ = s => document.querySelector(s);
@@ -126,6 +126,10 @@ function render() {
     const badge = out ? ["Habis", "text-red-400"] : p.stock <= 5 ? ["Sisa " + p.stock + " item", "text-amber-400"] : ["Tersedia (" + p.stock + ")", "text-neutral-400"];
     const imgCount = imgsOf(p).length;
 
+        const hasSizes = sizesOf(p).length > 0;
+    const btnText = out ? "Stok Habis" : hasSizes ? "Pilih Ukuran" : "+ Keranjang";
+    const btnAttr = hasSizes ? `data-open="${p.id}"` : `data-add="${p.id}"`;
+
     return `<article class="card flex flex-col group">
       <div data-open="${p.id}" class="relative cursor-pointer aspect-square bg-neutral-950 overflow-hidden flex items-center justify-center">
         <img loading="lazy" decoding="async" width="400" height="400" src="${esc(imgsOf(p)[0] || NOIMG)}" alt="${esc(p.name)}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
@@ -138,8 +142,10 @@ function render() {
           <b class="acc text-sm sm:text-base tracking-tight font-bold">${lkr(p.price)}</b>
           <span class="text-xs ${badge[1]} font-medium">${badge[0]}</span>
         </div>
-        <button ${sizesOf(p).length ? "data-open" : "data-add"}="${p.id}" ${out ? "disabled" : ""} class="red mt-2 min-h-[40px] rounded-xl py-2 text-xs sm:text-sm font-semibold disabled:opacity-30 disabled:cursor-not-allowed shadow-sm">
-          Tambah ke Keranjang
+        <button ${btnAttr} ${out ? "disabled" : ""} class="red mt-2.5 min-h-[38px] w-full rounded-xl py-2 px-3 text-xs sm:text-sm font-semibold flex items-center justify-center gap-1.5 disabled:opacity-30 disabled:cursor-not-allowed shadow-sm hover:brightness-110 active:scale-98 transition-all">
+          ${!out && !hasSizes ? `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>` : ""}
+          ${!out && hasSizes ? `<svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"/></svg>` : ""}
+          <span>${btnText}</span>
         </button>
       </div>
     </article>`;
@@ -174,8 +180,22 @@ function cartLines() {
 
 function renderCart() {
   const lines = cartLines();
-  $("#badge").textContent = lines.reduce((s, l) => s + l.q, 0);
-  $("#total").textContent = lkr(lines.reduce((s, l) => s + l.q * l.p.price, 0));
+  const totalCount = lines.reduce((s, l) => s + l.q, 0);
+  const totalPrice = lines.reduce((s, l) => s + l.q * l.p.price, 0);
+
+  $("#badge").textContent = totalCount;
+  $("#total").textContent = lkr(totalPrice);
+
+  const fc = $("#floatingCart");
+  if (fc) {
+    if (totalCount > 0) {
+      $("#fcCount").textContent = totalCount;
+      $("#fcTotal").textContent = lkr(totalPrice);
+      fc.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+    } else {
+      fc.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+    }
+  }
   $("#items").innerHTML = lines.length ? lines.map(({ p, q, size, i }) => `<div class="flex gap-3 items-center bg-neutral-900/40 p-2.5 rounded-xl border border-neutral-800/80">
     <img src="${esc(imgsOf(p)[0] || NOIMG)}" class="w-14 h-14 rounded-lg object-cover bg-black shrink-0">
     <div class="flex-1 min-w-0 text-sm break-words">
