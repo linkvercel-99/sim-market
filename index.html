@@ -37,13 +37,24 @@
     <!-- Spacer agar tombol di kanan rapi -->
     <div class="flex-1"></div>
 
-    <!-- Tombol Kontak CS -->
-    <button id="openContact" class="shrink-0 flex items-center gap-1.5 px-3 py-2 sm:py-2.5 rounded-full bg-neutral-900/90 border border-neutral-700/80 hover:border-neutral-500 text-neutral-200 text-xs sm:text-sm font-medium transition-all shadow-sm active:scale-95 cursor-pointer" aria-label="Kontak CS">
-      <svg class="w-4 h-4 acc shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-      </svg>
-      <span class="font-semibold">Kontak</span>
-    </button>
+    <!-- Tombol Order via Telegram (Sesuai Referensi Gambar) -->
+    <a id="btnTelegramHeader" href="https://t.me/CHITATOSTOREEE" target="_blank" rel="noopener noreferrer"
+       class="shrink-0 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-gradient-to-r from-[#0081c7] to-[#008ed6] hover:from-[#0074b3] hover:to-[#0081c2] text-white shadow-md shadow-sky-600/30 border border-sky-400/40 hover:scale-[1.02] active:scale-95 transition-all duration-200 select-none cursor-pointer"
+       title="Order via Telegram">
+      <!-- Lingkaran Ikon Telegram Bergaris Putih -->
+      <div class="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full border-2 border-white/95 flex items-center justify-center shrink-0 shadow-inner">
+        <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white fill-current -translate-x-0.5" viewBox="0 0 24 24">
+          <path d="M21.926 3.102a1.492 1.492 0 0 0-1.52-.275L2.378 10.82a1.492 1.492 0 0 0-.074 2.722l4.898 1.838 1.91 5.922a1.49 1.49 0 0 0 2.37.668l2.846-2.43 4.887 3.598a1.49 1.49 0 0 0 2.343-.884l3.19-17.18a1.49 1.49 0 0 0-.822-1.972zm-12.01 12.14l-.49 4.19-1.12-3.47 11.23-10.15-9.62 9.43z"/>
+        </svg>
+      </div>
+
+      <!-- Teks Informasi 3 Baris -->
+      <div class="text-left leading-tight">
+        <div class="font-extrabold text-[10px] sm:text-[12px] tracking-tight text-white drop-shadow-sm">Order via Telegram</div>
+        <div class="hidden sm:block text-[9px] text-sky-100 font-medium tracking-wide opacity-95">Cepat • Mudah • Terpercaya</div>
+        <div id="headerTgUser" class="font-bold text-[9.5px] sm:text-[11px] text-white tracking-tight drop-shadow-sm">@CHITATOSTOREEE</div>
+      </div>
+    </a>
 
     <!-- Tombol Keranjang -->
     <button id="openCart" class="relative acc p-2 sm:p-2.5 shrink-0 rounded-full hover:bg-neutral-800/60 transition-colors" aria-label="Keranjang">
@@ -104,93 +115,6 @@
 
 <audio id="bgm" src="musiku.mp3" loop preload="none"></audio>
 <button id="musicBtn" aria-label="Putar atau jeda musik" class="fixed bottom-4 right-4 z-30 w-11 h-11 rounded-full red text-lg shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform">🔇</button>
-
-<!-- Modal Kontak (WhatsApp & Telegram Asli) -->
-<div id="contactModal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm">
-  <div class="bg-[var(--bg)] border bd2 rounded-2xl w-full max-w-sm p-5 shadow-2xl relative text-[var(--text)]">
-    <!-- Header Modal -->
-    <div class="flex items-center justify-between pb-3 border-b bd2 mb-4">
-      <div class="flex items-center gap-2.5">
-        <div class="w-8 h-8 rounded-full bg-[var(--accent)]/15 flex items-center justify-center acc">
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"/>
-          </svg>
-        </div>
-        <div>
-          <h3 class="font-bold text-base leading-tight">Hubungi Kami</h3>
-          <p class="text-[11px] text-neutral-400">Layanan Pelanggan &amp; Bantuan</p>
-        </div>
-      </div>
-      <button id="closeContact" class="text-neutral-400 hover:text-white p-1.5 rounded-lg hover:bg-neutral-800/60 transition-colors" aria-label="Tutup">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
-      </button>
-    </div>
-
-    <p class="text-xs text-neutral-300 mb-4 leading-relaxed">
-      Punya pertanyaan seputar produk atau pesanan? Hubungi kami langsung melalui kontak WhatsApp atau Telegram resmi di bawah ini:
-    </p>
-
-    <!-- Pilihan Kontak WhatsApp & Telegram -->
-    <div class="space-y-3">
-      <!-- WhatsApp Card -->
-      <a id="btnContactWa" href="#" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3.5 p-3 rounded-xl bg-neutral-900/80 border border-emerald-500/30 hover:border-emerald-400 hover:bg-emerald-950/20 hover:shadow-lg hover:shadow-emerald-500/10 transition-all duration-200">
-        <div class="shrink-0 drop-shadow-md">
-          <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="waGradModal" x1="24" y1="2" x2="24" y2="46" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2EE06E"/>
-                <stop offset="1" stop-color="#1EBE5D"/>
-              </linearGradient>
-            </defs>
-            <circle cx="24" cy="24" r="22" fill="url(#waGradModal)"/>
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M24 10C16.27 10 10 16.27 10 24c0 2.66.74 5.14 2.03 7.26L10.5 37.5l6.42-1.5c2.06 1.25 4.49 2 7.08 2 7.73 0 14-6.27 14-14s-6.27-14-14-14zm-3.11 6.73c-.37-.9-.8-.92-1.35-.94-.4-.02-.86-.02-1.32-.02s-1.2.17-1.85.88c-.65.71-2.31 2.26-2.31 5.43s2.31 6.23 2.63 6.65c.32.42 4.45 7.11 10.95 9.65 5.41 2.11 6.51 1.2 7.65 1.09 1.14-.11 3.71-1.53 4.25-3.03.53-1.5.53-2.8.37-3.07-.16-.27-.58-.43-1.21-.75-.63-.31-3.7-1.83-4.27-2.03-.57-.2-.99-.31-1.41.33-.42.64-1.62 2.05-1.98 2.47-.36.42-.72.48-1.35.17-.63-.31-2.65-.98-5.05-3.12-1.87-1.66-3.13-3.72-3.49-4.34-.36-.62-.04-.96.28-1.27.28-.28.63-.73.95-1.1.32-.37.42-.64.63-1.06.21-.42.1-.8-.05-1.11-.15-.31-1.33-3.33-2.08-4.83z" fill="white"/>
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-sm text-white group-hover:text-emerald-300 transition-colors">WhatsApp</span>
-            <span class="text-[10px] font-semibold text-emerald-400 bg-emerald-500/15 px-1.5 py-0.5 rounded">Chat Langsung</span>
-          </div>
-          <p id="contactWaText" class="text-xs text-neutral-400 truncate mt-0.5">Chat di WhatsApp</p>
-        </div>
-        <svg class="w-4 h-4 text-neutral-500 group-hover:text-emerald-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-      </a>
-
-      <!-- Telegram Card -->
-      <a id="btnContactTg" href="#" target="_blank" rel="noopener noreferrer" class="group flex items-center gap-3.5 p-3 rounded-xl bg-neutral-900/80 border border-sky-500/30 hover:border-sky-400 hover:bg-sky-950/20 hover:shadow-lg hover:shadow-sky-500/10 transition-all duration-200">
-        <div class="shrink-0 drop-shadow-md">
-          <svg class="w-10 h-10" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="tgGradModal" x1="24" y1="2" x2="24" y2="46" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#2AABEE"/>
-                <stop offset="1" stop-color="#229ED9"/>
-              </linearGradient>
-            </defs>
-            <circle cx="24" cy="24" r="22" fill="url(#tgGradModal)"/>
-            <path fill="white" d="M34.8 15.2c-.2-.2-.5-.3-.8-.1L11.5 23.3c-.3.1-.5.4-.5.8s.2.6.6.7l5.5 1.5 2.1 6.5c.1.3.4.6.8.6h.1c.3 0 .6-.1.8-.4l3.2-3.9 5.9 4.3c.2.2.5.2.8.1.3-.1.5-.3.6-.6l4.4-17c.1-.3 0-.6-.2-.8zM19.9 27.5l-1-3.1 12.4-8.1-11.4 11.2z"/>
-          </svg>
-        </div>
-        <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2">
-            <span class="font-bold text-sm text-white group-hover:text-sky-300 transition-colors">Telegram</span>
-            <span class="text-[10px] font-semibold text-sky-400 bg-sky-500/15 px-1.5 py-0.5 rounded">Respon Cepat</span>
-          </div>
-          <p id="contactTgText" class="text-xs text-neutral-400 truncate mt-0.5">Chat di Telegram</p>
-        </div>
-        <svg class="w-4 h-4 text-neutral-500 group-hover:text-sky-400 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-
-    <!-- Catatan Tambahan -->
-    <div class="mt-4 pt-3 border-t bd2 flex items-center justify-between text-[11px] text-neutral-400">
-      <span>Siap melayani pertanyaan Anda</span>
-      <span class="inline-flex items-center gap-1 text-emerald-400 font-medium">
-        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-        Online
-      </span>
-    </div>
-  </div>
-</div>
 
 <div id="modal" class="fixed inset-0 z-[60] hidden items-center justify-center p-3 sm:p-4 bg-black/85 backdrop-blur-sm">
   <div id="mbox" class="card w-full max-w-3xl max-h-[90vh] overflow-y-auto relative shadow-2xl"></div>
