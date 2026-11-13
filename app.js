@@ -501,7 +501,6 @@ load();
 loadSettings();
 
 
-
 /* ===== TOMBOL TELEGRAM HEADER ===== */
 function updateTelegramHeader() {
   const u = tgUser();
@@ -516,36 +515,3 @@ function updateTelegramHeader() {
     if (txt) txt.textContent = "@" + TELEGRAM_USERNAME;
   }
 }
-// Efek interaktif 3D Tilt & Cahaya Kursor pada Banner
-(function initBanner3D() {
-  const wrap = document.getElementById("bannerWrapper");
-  const inner = document.getElementById("bannerInner");
-  if (!wrap || !inner) return;
-
-  let rafId = null;
-
-  wrap.addEventListener("mousemove", (e) => {
-    const rect = wrap.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    const px = ((x / rect.width) * 100).toFixed(1);
-    const py = ((y / rect.height) * 100).toFixed(1);
-
-    wrap.style.setProperty("--mouse-x", `${px}%`);
-    wrap.style.setProperty("--mouse-y", `${py}%`);
-
-    // Kemiringan halus 3D (-8 sampai +8 derajat)
-    const rotX = (((y / rect.height) - 0.5) * -8).toFixed(2);
-    const rotY = (((x / rect.width) - 0.5) * 8).toFixed(2);
-
-    if (rafId) cancelAnimationFrame(rafId);
-    rafId = requestAnimationFrame(() => {
-      inner.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.015, 1.015, 1.015)`;
-    });
-  });
-
-  wrap.addEventListener("mouseleave", () => {
-    if (rafId) cancelAnimationFrame(rafId);
-    inner.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
-  });
-})();
