@@ -1,3 +1,5 @@
+/* Pengaman agar elemen tersembunyi tidak bocor saat loading */
+.hidden { display: none !important; }
 
 /* Scroll kategori rapi tanpa scrollbar default */
 .no-scrollbar::-webkit-scrollbar { display: none; }
