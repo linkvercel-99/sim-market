@@ -171,3 +171,59 @@ html, body { max-width: 100%; overflow-x: clip; }
 #mbox h3, #mbox p, #items { overflow-wrap: anywhere; }
 @media(pointer: coarse) { .pill { min-height: 40px; } }
 @media(prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Efek Banner Bergerak & 3D Tilt Interaktif */
+.banner-wrapper {
+  position: relative;
+  perspective: 1000px;
+  border-radius: 1rem;
+}
+
+.banner-inner {
+  position: relative;
+  width: 100%;
+  border-radius: 1rem;
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition: transform 0.2s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.banner-wrapper:hover .banner-inner {
+  box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.6), 0 0 25px -5px var(--accent, rgba(139, 92, 201, 0.4));
+}
+
+/* Kilauan cahaya melintas otomatis (tidak kaku) */
+.banner-sweep {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.28), transparent);
+  transform: skewX(-25deg);
+  pointer-events: none;
+  animation: bannerSweep 4.5s infinite ease-in-out;
+  z-index: 2;
+}
+
+@keyframes bannerSweep {
+  0% { left: -150%; }
+  30%, 100% { left: 180%; }
+}
+
+/* Pantulan cahaya mengikuti kursor mouse */
+.banner-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle 260px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.25), transparent 70%);
+  transition: opacity 0.3s ease;
+  mix-blend-mode: overlay;
+  z-index: 3;
+}
+
+.banner-wrapper:hover .banner-spotlight {
+  opacity: 1;
+}
