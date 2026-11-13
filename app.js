@@ -34,7 +34,7 @@ const tgUser = () => String(S.telegram || TELEGRAM_USERNAME).replace(/^https?:\/
 
 function applySettings() {
   const r = document.documentElement.style;
-  r.setProperty("--accent", S.accent_color || "#b84040");
+  r.setProperty("--accent", S.accent_color || "#8b5cc9");
   r.setProperty("--bg", S.bg_color || "#0c0c0e");
   r.setProperty("--text", S.text_color || "#eeeeee");
 
