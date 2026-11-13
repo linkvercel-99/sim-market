@@ -4,7 +4,7 @@ const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const WHATSAPP_NUMBER = "94XXXXXXXXX";
 const TELEGRAM_USERNAME = "username_telegram";
 const LOGO = "https://imgg.fr/r/TJFJEMW2.webp";
-const BANNER = "https://sim-market-online.pages.dev/";
+const BANNER = "https://iashoonbusiyonhinvke.supabase.co/storage/v1/object/public/product-images/1792551614989-9e118i.webp";
 
 const $ = s => document.querySelector(s);
 const db = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
@@ -25,7 +25,7 @@ let m = null;
 const imgsOf = p => (Array.isArray(p.images) && p.images.length ? p.images : (p.image_url ? [p.image_url] : []));
 const sizesOf = p => (p.sizes || "").split(",").map(x => x.trim()).filter(Boolean);
 
-const DEF_LOGO = "https://imgg.fr/r/TJFJEMW2.webp", DEF_BANNER = "https://sim-market-online.pages.dev/";
+const DEF_LOGO = "https://imgg.fr/r/TJFJEMW2.webp", DEF_BANNER = "https://iashoonbusiyonhinvke.supabase.co/storage/v1/object/public/product-images/1792551614989-9e118i.webp";
 let S = {};
 try { S = JSON.parse(localStorage.getItem("cv_settings") || "{}"); } catch (e) {}
 
