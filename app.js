@@ -1,7 +1,7 @@
 /* ===== KONFIGURASI ===== */
 const SUPABASE_URL = "https://iashoonbusiyonhinvke.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlhc2hvb25idXNpeW9uaGludmtlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MTQxMzUsImV4cCI6MjEwODA5MDEzNX0.syeh_ZTmKZqgeM0A2LmrrB8zXyjQVT-ZEe31_92PhsY";
-const WHATSAPP_NUMBER = "62XXXXXXXXX";
+const WHATSAPP_NUMBER = "94XXXXXXXXX";
 const TELEGRAM_USERNAME = "username_telegram";
 const LOGO = "https://imgg.fr/r/TJFJEMW2.webp";
 const BANNER = "https://imgg.fr/r/ehx61nnc.webp";
@@ -501,56 +501,18 @@ load();
 loadSettings();
 
 
-/* ===== MODAL KONTAK (WHATSAPP & TELEGRAM) ===== */
-function updateContactLinks() {
-  const wa = waNum();
-  const tg = tgUser();
 
-  const btnWa = $("#btnContactWa");
-  const textWa = $("#contactWaText");
-  if (btnWa) {
-    if (wa && wa !== "94XXXXXXXXX") {
-      btnWa.href = `https://wa.me/${wa}?text=${encodeURIComponent("Halo Admin SIM Market, saya ingin bertanya seputar produk...")}`;
-      if (textWa) textWa.textContent = "+" + wa;
-    } else {
-      btnWa.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent("Halo Admin SIM Market, saya ingin bertanya seputar produk...")}`;
-      if (textWa) textWa.textContent = "Chat WhatsApp";
-    }
-  }
-
-  const btnTg = $("#btnContactTg");
-  const textTg = $("#contactTgText");
-  if (btnTg) {
-    if (tg && tg !== "username_telegram") {
-      btnTg.href = `https://t.me/${tg}`;
-      if (textTg) textTg.textContent = "@" + tg;
-    } else {
-      btnTg.href = `https://t.me/${TELEGRAM_USERNAME}`;
-      if (textTg) textTg.textContent = "Buka Telegram";
-    }
+/* ===== TOMBOL TELEGRAM HEADER ===== */
+function updateTelegramHeader() {
+  const u = tgUser();
+  const btn = $("#btnTelegramHeader");
+  const txt = $("#headerTgUser");
+  if (!btn) return;
+  if (u && u !== "username_telegram") {
+    btn.href = `https://t.me/${u}`;
+    if (txt) txt.textContent = "@" + u;
+  } else {
+    btn.href = `https://t.me/${TELEGRAM_USERNAME}`;
+    if (txt) txt.textContent = "@" + TELEGRAM_USERNAME;
   }
 }
-
-function openContactModal() {
-  updateContactLinks();
-  const modal = $("#contactModal");
-  if (!modal) return;
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function closeContactModal() {
-  const modal = $("#contactModal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-}
-
-$("#openContact")?.addEventListener("click", openContactModal);
-$("#closeContact")?.addEventListener("click", closeContactModal);
-$("#contactModal")?.addEventListener("click", e => {
-  if (e.target === $("#contactModal")) closeContactModal();
-});
-document.addEventListener("keydown", e => {
-  if (e.key === "Escape") closeContactModal();
-});
