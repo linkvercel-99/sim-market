@@ -24,37 +24,15 @@
 <body class="min-h-screen">
 
 <div class="hdr">
-  <header class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2 sm:gap-3">
+    <header class="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 flex items-center gap-2.5 sm:gap-4">
     <!-- Logo Toko -->
     <img id="logo" src="https://imgg.fr/r/TJFJEMW2.webp" width="64" height="64" decoding="async" class="w-11 h-11 sm:w-13 sm:h-13 shrink-0 rounded-full border border-neutral-800 object-cover" alt="SIM Logo">
     
-    <!-- Input Pencarian (Ringkas, proporsional, tidak memanjang dari ujung ke ujung) -->
-    <div class="relative flex-1 min-w-0 max-w-[200px] xs:max-w-xs sm:max-w-sm md:max-w-md">
+    <!-- Input Pencarian (Memanjang mengisi seluruh ruang) -->
+    <div class="relative flex-1">
       <svg width="16" height="16" class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400 pointer-events-none" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
       <input id="q" type="search" placeholder="Cari produk..." class="w-full bg-neutral-900/90 border border-neutral-700/80 rounded-full pl-9 sm:pl-10 pr-3 sm:pr-4 py-2 sm:py-2.5 text-xs sm:text-sm outline-none focus:border-[var(--accent)] transition-colors text-white placeholder-neutral-500">
     </div>
-
-    <!-- Spacer agar tombol di kanan rapi -->
-    <div class="flex-1"></div>
-
-    <!-- Tombol Order via Telegram (Sesuai Referensi Gambar) -->
-    <a id="btnTelegramHeader" href="https://t.me/CHITATOSTOREEE" target="_blank" rel="noopener noreferrer"
-       class="shrink-0 flex items-center gap-1.5 sm:gap-2.5 px-2.5 py-1 sm:px-3.5 sm:py-1.5 rounded-full bg-gradient-to-r from-[#0081c7] to-[#008ed6] hover:from-[#0074b3] hover:to-[#0081c2] text-white shadow-md shadow-sky-600/30 border border-sky-400/40 hover:scale-[1.02] active:scale-95 transition-all duration-200 select-none cursor-pointer"
-       title="Order via Telegram">
-      <!-- Lingkaran Ikon Telegram Bergaris Putih -->
-      <div class="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full border-2 border-white/95 flex items-center justify-center shrink-0 shadow-inner">
-        <svg width="16" height="16" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white fill-current -translate-x-0.5" viewBox="0 0 24 24">
-          <path d="M21.926 3.102a1.492 1.492 0 0 0-1.52-.275L2.378 10.82a1.492 1.492 0 0 0-.074 2.722l4.898 1.838 1.91 5.922a1.49 1.49 0 0 0 2.37.668l2.846-2.43 4.887 3.598a1.49 1.49 0 0 0 2.343-.884l3.19-17.18a1.49 1.49 0 0 0-.822-1.972zm-12.01 12.14l-.49 4.19-1.12-3.47 11.23-10.15-9.62 9.43z"/>
-        </svg>
-      </div>
-
-      <!-- Teks Informasi 3 Baris -->
-      <div class="text-left leading-tight">
-        <div class="font-extrabold text-[10px] sm:text-[12px] tracking-tight text-white drop-shadow-sm">Order via Telegram</div>
-        <div class="hidden sm:block text-[9px] text-sky-100 font-medium tracking-wide opacity-95">Cepat • Mudah • Terpercaya</div>
-        <div id="headerTgUser" class="font-bold text-[9.5px] sm:text-[11px] text-white tracking-tight drop-shadow-sm">@CHITATOSTOREEE</div>
-      </div>
-    </a>
 
     <!-- Tombol Keranjang -->
     <button id="openCart" class="relative acc p-2 sm:p-2.5 shrink-0 rounded-full hover:bg-neutral-800/60 transition-colors" aria-label="Keranjang">
@@ -62,6 +40,7 @@
       <span id="badge" class="absolute top-0.5 right-0.5 red text-[10px] font-bold rounded-full w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center shadow-md">0</span>
     </button>
   </header>
+  
   <!-- Bar Kategori Sticky (Menempel di bawah header saat di-scroll) -->
   <div class="border-t border-neutral-800/60 max-w-6xl mx-auto px-3 sm:px-4">
     <nav id="cats" class="flex gap-2 overflow-x-auto py-2.5 no-scrollbar"></nav>
@@ -70,7 +49,25 @@
 
 <main class="max-w-6xl mx-auto px-3 sm:px-4 pb-24">
   
-  <img id="banner" src="https://iashoonbusiyonhinvke.supabase.co/storage/v1/object/public/product-images/1792551614989-9e118i.webp" width="1470" height="348" ...
+    <!-- Banner dengan Tombol Order via Telegram di Pojok Kanan Bawah -->
+  <div class="relative rounded-2xl overflow-hidden border border-neutral-800 shadow-sm bg-neutral-900 my-1">
+    <img id="banner" src="https://iashoonbusiyonhinvke.supabase.co/storage/v1/object/public/product-images/1792551614989-9e118i.webp" width="1470" height="348" fetchpriority="high" decoding="async" class="w-full h-auto block" alt="Banner promo Sim market">
+
+    <a id="btnTelegramHeader" href="https://t.me/CHITATOSTOREEE" target="_blank" rel="noopener noreferrer"
+       class="absolute bottom-2.5 right-2.5 sm:bottom-4 sm:right-4 flex items-center gap-1.5 sm:gap-2.5 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full bg-gradient-to-r from-[#0081c7] to-[#008ed6] hover:from-[#0074b3] hover:to-[#0081c2] text-white shadow-xl shadow-black/80 border border-sky-400/40 hover:scale-[1.03] active:scale-95 transition-all duration-200 select-none cursor-pointer z-10"
+       title="Order via Telegram">
+      <div class="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full border-2 border-white/95 flex items-center justify-center shrink-0 shadow-inner">
+        <svg width="16" height="16" class="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white fill-current -translate-x-0.5" viewBox="0 0 24 24">
+          <path d="M21.926 3.102a1.492 1.492 0 0 0-1.52-.275L2.378 10.82a1.492 1.492 0 0 0-.074 2.722l4.898 1.838 1.91 5.922a1.49 1.49 0 0 0 2.37.668l2.846-2.43 4.887 3.598a1.49 1.49 0 0 0 2.343-.884l3.19-17.18a1.49 1.49 0 0 0-.822-1.972zm-12.01 12.14l-.49 4.19-1.12-3.47 11.23-10.15-9.62 9.43z"/>
+        </svg>
+      </div>
+      <div class="text-left leading-tight">
+        <div class="font-extrabold text-[10px] sm:text-[12px] tracking-tight text-white drop-shadow-sm">Order via Telegram</div>
+        <div class="hidden sm:block text-[9px] text-sky-100 font-medium tracking-wide opacity-95">Cepat • Mudah • Terpercaya</div>
+        <div id="headerTgUser" class="font-bold text-[9.5px] sm:text-[11px] text-white tracking-tight drop-shadow-sm">@CHITATOSTOREEE</div>
+      </div>
+    </a>
+  </div>
 
    <!-- Keunggulan Layanan (Otomatis ikut warna tema Admin) -->
   <section class="grid grid-cols-2 md:grid-cols-4 gap-3 border bd2 rounded-2xl p-4 my-5 text-xs bg-neutral-900/30">
