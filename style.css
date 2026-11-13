@@ -5,9 +5,9 @@
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 :root {
-  --accent: #b84040;
-  --bg: #0c0c0e;
-  --text: #eeeeee;
+  --accent: #8b5cc9;
+  --bg: #08050f;
+  --text: #f3eeff;
 }
 
 body {
