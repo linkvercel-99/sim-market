@@ -86,8 +86,12 @@ async function shrink(file, max = 800, alpha = false) {
   return new Promise(res => c.toBlob(res, "image/webp", .8));
 }
 async function upload(file, max = 800, alpha = false) {
-  const blob = await shrink(file, max, alpha), path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.webp`;
-  const { error } = await db.storage.from(BUCKET).upload(path, blob, { contentType: "image/webp" });
+  const isGif = file.type === "image/gif" || (file.name && file.name.toLowerCase().endsWith(".gif"));
+  const blob = isGif ? file : await shrink(file, max, alpha);
+  const ext = isGif ? "gif" : "webp";
+  const contentType = isGif ? "image/gif" : "image/webp";
+  const path = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+  const { error } = await db.storage.from(BUCKET).upload(path, blob, { contentType });
   if (error) throw error;
   return db.storage.from(BUCKET).getPublicUrl(path).data.publicUrl;
 }
